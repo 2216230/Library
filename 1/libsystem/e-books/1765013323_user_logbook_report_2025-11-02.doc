@@ -1,0 +1,166 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' 
+    xmlns:w='urn:schemas-microsoft-com:office:word' 
+    xmlns='http://www.w3.org/TR/REC-html40'>
+    <head>
+    <meta charset='utf-8'>
+    <title>User Logbook Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 11pt; }
+        h1 { color: #006400; text-align: center; }
+        h2 { color: #006400; border-bottom: 2px solid #006400; padding-bottom: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background: #006400; color: white; padding: 8px; text-align: left; }
+        td { padding: 6px; border: 1px solid #ddd; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; }
+        .stat-box { border: 1px solid #006400; padding: 10px; text-align: center; }
+        .stat-number { font-size: 16pt; font-weight: bold; color: #006400; }
+        .stat-label { font-size: 10pt; color: #666; }
+        .filters { background: #f0f0f0; padding: 10px; margin: 10px 0; border-left: 4px solid #006400; }
+        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 9pt; }
+    </style>
+    </head>
+    <body><h1>User Activity Logs Report</h1><p style='text-align: center; color: #666;'>Library System | Generated on: November 2, 2025 at 12:31 PM</p><div class='stats'><div class='stat-box'><span class='stat-number'>17</span><br><span class='stat-label'>Total Logs</span></div><div class='stat-box'><span class='stat-number'>2</span><br><span class='stat-label'>Unique Users</span></div><div class='stat-box'><span class='stat-number'>01:30:20</span><br><span class='stat-label'>Avg Session</span></div><div class='stat-box'><span class='stat-number'>12:02:44</span><br><span class='stat-label'>Total Time</span></div></div><h2>User Activity Details</h2><table border='1'><tr>
+        <th>User ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Login Time</th>
+        <th>Logout Time</th>
+        <th>Duration</th>
+        <th>IP Address</th>
+    </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Nov 2, 2025 11:56 AM</td>
+                <td>Active</td>
+                <td>-</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>2324</td>
+                <td>sheekhayna fuswelan</td>
+                <td>Student</td>
+                <td>Nov 2, 2025 11:54 AM</td>
+                <td>Nov 2, 2025 11:56 AM</td>
+                <td>00:02:22</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Nov 2, 2025 11:20 AM</td>
+                <td>Nov 2, 2025 11:54 AM</td>
+                <td>00:33:22</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Nov 2, 2025 11:19 AM</td>
+                <td>Nov 2, 2025 11:20 AM</td>
+                <td>00:01:26</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Nov 2, 2025 10:08 AM</td>
+                <td>Active</td>
+                <td>-</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Nov 1, 2025 2:48 PM</td>
+                <td>Active</td>
+                <td>-</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>2324</td>
+                <td>sheekhayna fuswelan</td>
+                <td>Student</td>
+                <td>Nov 1, 2025 7:33 AM</td>
+                <td>Nov 1, 2025 2:48 PM</td>
+                <td>07:14:49</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Nov 1, 2025 7:32 AM</td>
+                <td>Active</td>
+                <td>-</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>2324</td>
+                <td>sheekhayna fuswelan</td>
+                <td>Student</td>
+                <td>Nov 1, 2025 3:49 AM</td>
+                <td>Nov 1, 2025 7:32 AM</td>
+                <td>03:42:24</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>2324</td>
+                <td>sheekhayna fuswelan</td>
+                <td>Student</td>
+                <td>Nov 1, 2025 2:31 AM</td>
+                <td>Nov 1, 2025 2:33 AM</td>
+                <td>00:02:04</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Nov 1, 2025 2:17 AM</td>
+                <td>Active</td>
+                <td>-</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>2324</td>
+                <td>sheekhayna fuswelan</td>
+                <td>Student</td>
+                <td>Oct 31, 2025 12:28 PM</td>
+                <td>Active</td>
+                <td>-</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Oct 31, 2025 12:02 PM</td>
+                <td>Oct 31, 2025 12:28 PM</td>
+                <td>00:26:03</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Oct 31, 2025 11:55 AM</td>
+                <td>Active</td>
+                <td>-</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Oct 31, 2025 11:51 AM</td>
+                <td>Active</td>
+                <td>-</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>marijoysapditbsu@gmail.com</td>
+                <td>mjoy joy</td>
+                <td>Admin</td>
+                <td>Oct 31, 2025 10:29 AM</td>
+                <td>Active</td>
+                <td>-</td>
+                <td>::1</td>
+            </tr><tr>
+                <td>2324</td>
+                <td>sheekhayna fuswelan</td>
+                <td>Student</td>
+                <td>Oct 31, 2025 10:29 AM</td>
+                <td>Oct 31, 2025 10:29 AM</td>
+                <td>00:00:14</td>
+                <td>::1</td>
+            </tr></table><div class='footer'>Report generated by Library System on November 2, 2025 at 12:31 PM</div></body></html>

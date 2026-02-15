@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Archived Transactions Endpoint</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .success { color: green; background: #efe; padding: 10px; margin: 10px 0; }
+        .error { color: red; background: #fee; padding: 10px; margin: 10px 0; }
+        .info { color: blue; background: #eef; padding: 10px; margin: 10px 0; }
+        pre { background: #f0f0f0; padding: 10px; overflow-x: auto; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #4CAF50; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Archived Transactions System Test</h1>
+    
+    <h2>1. Testing Endpoint Response</h2>
+    <div id="endpointTest"></div>
+    
+    <h2>2. Rendering Table</h2>
+    <table>
+        <thead style="background: linear-gradient(135deg, #006400 0%, #228B22 100%); color: white;">
+            <tr>
+                <th>#</th>
+                <th>Borrower</th>
+                <th>Book Title</th>
+                <th>Call No.</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Status</th>
+                <th>Archived On</th>
+            </tr>
+        </thead>
+        <tbody id="testTable"></tbody>
+    </table>
+    
+    <script src="../libsystem/bower_components/jquery/dist/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Test the endpoint
+        $.ajax({
+            url: 'libsystem/admin/archived_transactions_load.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log('Endpoint Response:', data);
+                
+                $('#endpointTest').html(
+                    '<div class="success">' +
+                    '<strong>✓ Endpoint responding successfully!</strong><br>' +
+                    'Records returned: ' + (data ? data.length : 0) +
+                    '</div>'
+                );
+                
+                // Render table
+                if (data && data.length > 0) {
+                    let html = '';
+                    data.forEach((t, idx) => {
+                        let statusBadge = 'default';
+                        let statusText = t.status || 'Unknown';
+                        
+                        switch (t.status.toLowerCase()) {
+                            case 'returned': statusBadge = 'green'; break;
+                            case 'lost': statusBadge = 'gray'; break;
+                            case 'damaged': statusBadge = 'orange'; break;
+                            case 'borrowed': statusBadge = 'blue'; break;
+                        }
+                        
+                        statusText = statusText.charAt(0).toUpperCase() + statusText.slice(1);
+                        
+                        html += '<tr>' +
+                            '<td>' + (idx + 1) + '</td>' +
+                            '<td>' + (t.borrower || 'Unknown') + '</td>' +
+                            '<td>' + (t.book_title || 'Unknown') + '</td>' +
+                            '<td>' + (t.call_no || '') + '</td>' +
+                            '<td>' + (t.borrow_date || '') + '</td>' +
+                            '<td>' + (t.due_date || '') + '</td>' +
+                            '<td>' + (t.return_date || 'Not Returned') + '</td>' +
+                            '<td><span style="background: ' + statusBadge + '; color: white; padding: 3px 8px; border-radius: 3px;">' + statusText + '</span></td>' +
+                            '<td>' + (t.archived_on || '') + '</td>' +
+                            '</tr>';
+                    });
+                    $('#testTable').html(html);
+                } else {
+                    $('#testTable').html('<tr><td colspan="9" class="info">No archived transactions found.</td></tr>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                console.error('Response:', xhr.responseText);
+                
+                $('#endpointTest').html(
+                    '<div class="error">' +
+                    '<strong>✗ Error loading endpoint!</strong><br>' +
+                    'Status: ' + status + '<br>' +
+                    'Error: ' + error + '<br>' +
+                    'Response: ' + xhr.responseText.substring(0, 200) +
+                    '</div>'
+                );
+            }
+        });
+    });
+    </script>
+</body>
+</html>

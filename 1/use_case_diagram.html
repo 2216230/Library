@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library System - Use Case Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #006400 0%, #004d00 100%);
+            color: #FFD700;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .controls {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #006400 0%, #228B22 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 100, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e8e8e8;
+            color: #333;
+            border: 2px solid #006400;
+        }
+
+        .btn-secondary:hover {
+            background: #d8d8d8;
+        }
+
+        .diagram-container {
+            padding: 30px;
+            overflow-x: auto;
+            background: #fafbfc;
+            min-height: 600px;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        .legend {
+            background: white;
+            padding: 20px 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .legend h3 {
+            color: #006400;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border-left: 4px solid #006400;
+        }
+
+        .legend-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .icon-admin {
+            background: linear-gradient(135deg, #006400 0%, #228B22 100%);
+        }
+
+        .icon-student {
+            background: linear-gradient(135deg, #4169E1 0%, #1E90FF 100%);
+        }
+
+        .icon-faculty {
+            background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%);
+        }
+
+        .icon-system {
+            background: linear-gradient(135deg, #9932CC 0%, #BA55D3 100%);
+        }
+
+        .use-cases {
+            background: white;
+            padding: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .use-cases h3 {
+            color: #006400;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .use-case-card {
+            background: linear-gradient(135deg, #f5fff5 0%, #e8f5e9 100%);
+            border: 2px solid #c8e6c9;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .use-case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 100, 0, 0.15);
+            border-color: #006400;
+        }
+
+        .use-case-card h4 {
+            color: #006400;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .use-case-card p {
+            color: #555;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .use-case-actors {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .actor-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: white;
+        }
+
+        .actor-admin {
+            background: #006400;
+        }
+
+        .actor-student {
+            background: #4169E1;
+        }
+
+        .actor-faculty {
+            background: #FF8C00;
+        }
+
+        .actor-system {
+            background: #9932CC;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px 30px;
+            border-top: 2px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px 30px;
+            background: #f5f5f5;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #006400;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #006400;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .diagram-container {
+                padding: 15px;
+            }
+
+            .use-case-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 15px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #006400;
+            border-bottom-color: #006400;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .detail-section {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #006400;
+        }
+
+        .detail-section h4 {
+            color: #006400;
+            margin-bottom: 10px;
+        }
+
+        .detail-section ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .detail-section li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Library Management System</h1>
+            <p>Use Case Diagram & System Overview</p>
+        </header>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="downloadDiagram()">
+                ⬇️ Download SVG
+            </button>
+            <button class="btn btn-secondary" onclick="printDiagram()">
+                🖨️ Print
+            </button>
+            <button class="btn btn-secondary" onclick="toggleFullscreen()">
+                ⛶ Fullscreen
+            </button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">40+</div>
+                <div class="stat-label">Use Cases</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Actors</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Functional Areas</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Database Tables</div>
+            </div>
+        </div>
+
+        <div class="diagram-container" id="diagramContainer">
+            <div class="mermaid">
+graph TB
+    subgraph Actors["👥 Actors"]
+        Admin["👨‍💼 Admin"]
+        Student["👨‍🎓 Student"]
+        Faculty["👨‍🏫 Faculty"]
+        System["⚙️ System"]
+    end
+
+    subgraph Auth["🔐 Authentication & Account Management"]
+        UC1["Admin Login"]
+        UC2["Student Registration"]
+        UC3["Faculty Registration"]
+        UC4["Student/Faculty Login"]
+    end
+
+    subgraph BookMgmt["📖 Book & Inventory Management"]
+        UC5["Manage Physical Books"]
+        UC6["Manage E-Books"]
+        UC7["Manage Categories"]
+        UC8["Manage Subjects"]
+        UC9["Perform Inventory Validation"]
+        UC10["View Validation History"]
+        UC11["View Disposal Report"]
+    end
+
+    subgraph UserMgmt["👤 User Management"]
+        UC12["Manage Students"]
+        UC13["Manage Faculty"]
+        UC14["Manage Courses"]
+        UC15["Manage Admin Accounts"]
+        UC16["View User Activity Log"]
+    end
+
+    subgraph Transactions["📤 Book Transactions"]
+        UC17["Browse Catalog"]
+        UC18["Suggest Book"]
+        UC19["Borrow Book"]
+        UC20["Return Book"]
+        UC21["Manage Transactions"]
+        UC22["View Personal Transactions"]
+        UC23["Pay Penalties"]
+    end
+
+    subgraph Reports["📊 Reports & Analytics"]
+        UC24["Generate Transaction Report"]
+        UC25["Generate Inventory Report"]
+        UC26["Generate Discrepancy Report"]
+        UC27["Generate Validation Report"]
+        UC28["View System Dashboard"]
+    end
+
+    subgraph Communications["💬 Communication & Settings"]
+        UC29["Send Announcements"]
+        UC30["Receive Notifications"]
+        UC31["Configure System Settings"]
+        UC32["Manage Penalty Rules"]
+    end
+
+    Admin --> UC1
+    Admin --> UC5
+    Admin --> UC6
+    Admin --> UC7
+    Admin --> UC8
+    Admin --> UC9
+    Admin --> UC10
+    Admin --> UC11
+    Admin --> UC12
+    Admin --> UC13
+    Admin --> UC14
+    Admin --> UC15
+    Admin --> UC16
+    Admin --> UC21
+    Admin --> UC24
+    Admin --> UC25
+    Admin --> UC26
+    Admin --> UC27
+    Admin --> UC28
+    Admin --> UC29
+    Admin --> UC31
+    Admin --> UC32
+
+    Student --> UC2
+    Student --> UC4
+    Student --> UC17
+    Student --> UC18
+    Student --> UC19
+    Student --> UC20
+    Student --> UC22
+    Student --> UC23
+    Student --> UC30
+
+    Faculty --> UC3
+    Faculty --> UC4
+    Faculty --> UC17
+    Faculty --> UC18
+    Faculty --> UC19
+    Faculty --> UC20
+    Faculty --> UC22
+    Faculty --> UC23
+    Faculty --> UC30
+
+    System --> UC30
+    System --> UC9
+    System --> UC21
+
+    UC9 -.->|includes| UC26
+    UC9 -.->|includes| UC27
+    UC19 -.->|includes| UC21
+    UC20 -.->|includes| UC21
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>🎯 Legend</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-icon icon-admin">A</div>
+                    <div>
+                        <strong>Admin</strong><br>
+                        <small>System administrator with full access</small>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon icon-student">S</div>
+                    <div>
+                        <strong>Student</strong><br>
+                        <small>Library user (borrow, return, browse)</small>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon icon-faculty">F</div>
+                    <div>
+                        <strong>Faculty</strong><br>
+                        <small>Instructor with student-level access</small>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon icon-system">S</div>
+                    <div>
+                        <strong>System</strong><br>
+                        <small>Automated processes & notifications</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="use-cases">
+            <h3>📋 Use Cases by Category</h3>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('all')">All Use Cases</button>
+                <button class="tab-btn" onclick="switchTab('admin')">Admin Only</button>
+                <button class="tab-btn" onclick="switchTab('student')">Student/Faculty</button>
+                <button class="tab-btn" onclick="switchTab('transactions')">Transactions</button>
+                <button class="tab-btn" onclick="switchTab('reports')">Reports</button>
+            </div>
+
+            <div id="all" class="tab-content active">
+                <div class="use-case-grid">
+                    <!-- Authentication -->
+                    <div class="use-case-card">
+                        <h4>🔐 Admin Login</h4>
+                        <p>Admin logs in using email and password. System validates credentials using password_hash/verify.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📝 Student Registration</h4>
+                        <p>New student creates account with student ID, name, and course information.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📝 Faculty Registration</h4>
+                        <p>Faculty member registers with faculty ID, name, and department information.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <!-- Book Management -->
+                    <div class="use-case-card">
+                        <h4>📖 Manage Physical Books</h4>
+                        <p>Add, update, delete, or archive physical books. Track call numbers, ISBNs, and availability.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>💾 Manage E-Books</h4>
+                        <p>Manage e-book collection integrated with Calibre. Add, update, and organize digital resources.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>🏷️ Manage Categories</h4>
+                        <p>Create and organize book categories for better catalog organization.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📚 Manage Subjects</h4>
+                        <p>Create and manage academic subjects for book classification and discovery.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <!-- Transactions -->
+                    <div class="use-case-card">
+                        <h4>🔍 Browse Catalog</h4>
+                        <p>Search and filter books by title, author, ISBN, call number, category, or subject.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>💡 Suggest Book</h4>
+                        <p>Users can recommend books for library acquisition. Admin reviews suggestions.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📤 Borrow Book</h4>
+                        <p>Check out a physical book with automatic due date calculation. Track copy condition.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📥 Return Book</h4>
+                        <p>Return borrowed book. Record condition and assess penalties if overdue or damaged.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>💰 Pay Penalties</h4>
+                        <p>Settle overdue fines and damage fees. Track payment history.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <!-- Inventory -->
+                    <div class="use-case-card">
+                        <h4>✅ Perform Inventory Validation</h4>
+                        <p>Validate physical books against system records. Flag missing, damaged, or lost items. Generate reports.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📋 View Validation History</h4>
+                        <p>Review past inventory validations and their results.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>🗑️ View Disposal Report</h4>
+                        <p>Track disposed, damaged, or lost books throughout history.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <!-- User Management -->
+                    <div class="use-case-card">
+                        <h4>👨‍🎓 Manage Students</h4>
+                        <p>Add, update, or archive student records. Cannot delete students with active transactions.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>👨‍🏫 Manage Faculty</h4>
+                        <p>Add, update, or archive faculty members. Cannot delete faculty with active transactions.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>🎓 Manage Courses</h4>
+                        <p>Create and manage academic courses for student classification.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>⚙️ Manage Admin Accounts</h4>
+                        <p>Superadmin creates and manages other admin users (Superadmin only).</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📊 View User Activity Log</h4>
+                        <p>Track user logins, logouts, and system activities for audit purposes.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <!-- Reports -->
+                    <div class="use-case-card">
+                        <h4>📈 Generate Transaction Report</h4>
+                        <p>Create comprehensive reports on borrowing activities. Export to Word, PDF, or Excel.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📊 Generate Inventory Report</h4>
+                        <p>Create detailed inventory statistics and book availability summaries.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>⚠️ Generate Discrepancy Report</h4>
+                        <p>Report missing, damaged, lost, or needing repair items discovered during validation.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>✔️ Generate Validation Report</h4>
+                        <p>Detailed report of physical inventory validation results with statistics.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📱 View System Dashboard</h4>
+                        <p>Monitor system statistics, user counts, book inventory, and transaction activity.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <!-- Communications -->
+                    <div class="use-case-card">
+                        <h4>📢 Send Announcements</h4>
+                        <p>Create and publish library announcements visible on user home pages.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📧 Receive Notifications</h4>
+                        <p>Automated email notifications for overdue books and penalty assessments.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                            <span class="actor-badge actor-system">System</span>
+                        </div>
+                    </div>
+
+                    <!-- Settings -->
+                    <div class="use-case-card">
+                        <h4>⚙️ Configure System Settings</h4>
+                        <p>Configure academic years, transaction settings, and notification preferences (Superadmin).</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>💸 Manage Penalty Rules</h4>
+                        <p>Set overdue fines and damage fee calculations (Superadmin).</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📱 View Personal Transactions</h4>
+                        <p>Check personal borrowing history, current loans, and due dates.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>🔧 Manage Transactions</h4>
+                        <p>Admin view and modify all transactions, handle overdue books and damages.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="admin" class="tab-content">
+                <div class="use-case-grid">
+                    <div class="use-case-card">
+                        <h4>🔐 Admin Login</h4>
+                        <p>Admin logs in using email and password with secure authentication.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📖 Manage Physical Books</h4>
+                        <p>Full CRUD operations on physical book inventory with detailed metadata.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>💾 Manage E-Books</h4>
+                        <p>Manage digital collection integrated with Calibre system.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>✅ Perform Inventory Validation</h4>
+                        <p>Complete workflow: checklist → count → discrepancy reporting → validation report.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>👨‍🎓 Manage Students</h4>
+                        <p>Add, update, archive students with transaction validation constraints.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>👨‍🏫 Manage Faculty</h4>
+                        <p>Add, update, archive faculty with transaction validation constraints.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📊 View System Dashboard</h4>
+                        <p>Comprehensive dashboard showing system statistics and activity monitoring.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📈 Generate Reports</h4>
+                        <p>Generate transaction, inventory, discrepancy, and validation reports.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="student" class="tab-content">
+                <div class="use-case-grid">
+                    <div class="use-case-card">
+                        <h4>📝 Student Registration</h4>
+                        <p>Create new account with student ID and course information.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>🔓 Student/Faculty Login</h4>
+                        <p>Secure login using student/faculty ID and password.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>🔍 Browse Catalog</h4>
+                        <p>Search and filter physical and e-books by multiple criteria.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>💡 Suggest Book</h4>
+                        <p>Recommend books for library acquisition.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📤 Borrow Book</h4>
+                        <p>Check out physical books with automatic due date assignment.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📥 Return Book</h4>
+                        <p>Return borrowed books and track condition assessment.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📱 View Personal Transactions</h4>
+                        <p>Check personal borrowing history and current loans.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>💰 Pay Penalties</h4>
+                        <p>Settle overdue fines and damage fees.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="transactions" class="tab-content">
+                <div class="use-case-grid">
+                    <div class="use-case-card">
+                        <h4>🔍 Browse Catalog</h4>
+                        <p>Advanced search with filters for title, author, ISBN, call number, category, subject.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📤 Borrow Book</h4>
+                        <p>Workflow: Select book → Calculate due date → Create transaction → Update availability.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📥 Return Book</h4>
+                        <p>Workflow: Scan/select book → Record condition → Close transaction → Check penalties.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>🔧 Manage Transactions</h4>
+                        <p>Admin view, modify, and manage all transactions with overdue and damage handling.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>💰 Pay Penalties</h4>
+                        <p>Process payment for overdue fines and damage fees.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📱 View Personal Transactions</h4>
+                        <p>Display active loans, past returns, due dates, and transaction history.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>💡 Suggest Book</h4>
+                        <p>Users can recommend books for acquisition with admin review.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-student">Student</span>
+                            <span class="actor-badge actor-faculty">Faculty</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reports" class="tab-content">
+                <div class="use-case-grid">
+                    <div class="use-case-card">
+                        <h4>📈 Transaction Report</h4>
+                        <p>Comprehensive reports on borrowing activities with date/status filters. Export to Word/PDF/Excel.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📊 Inventory Report</h4>
+                        <p>Detailed statistics on book collection, availability, and categorization.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>⚠️ Discrepancy Report</h4>
+                        <p>Report of missing, damaged, lost, or repair-needed items discovered during validation.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>✔️ Validation Report</h4>
+                        <p>Detailed physical inventory validation results with completion statistics.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📋 Validation History</h4>
+                        <p>Review past validation attempts, dates, and results.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>🗑️ Disposal Report</h4>
+                        <p>Track disposed, damaged, or lost books throughout system history.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h4>📱 System Dashboard</h4>
+                        <p>Real-time dashboard with user counts, book inventory, transactions, and system health.</p>
+                        <div class="use-case-actors">
+                            <span class="actor-badge actor-admin">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section" style="margin: 30px;">
+            <h4>🏗️ System Architecture Overview</h4>
+            <ul>
+                <li><strong>Framework:</strong> AdminLTE 3.3.7 with Bootstrap 3.3.7</li>
+                <li><strong>Backend:</strong> PHP with prepared statements and MySQLi</li>
+                <li><strong>Database:</strong> MySQL/MariaDB with 15+ tables</li>
+                <li><strong>Authentication:</strong> Session-based with role hierarchy (Admin/Student/Faculty)</li>
+                <li><strong>Email:</strong> PHPMailer for notifications and alerts</li>
+                <li><strong>E-Books:</strong> Calibre integration for digital collection</li>
+                <li><strong>Reporting:</strong> Word/PDF export functionality</li>
+                <li><strong>Security:</strong> Prepared statements, password hashing, session validation</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>📚 Library Management System v5.0 | Use Case Diagram & Documentation</p>
+            <p style="margin-top: 10px; opacity: 0.7;">Created with Mermaid Diagram Engine | Last Updated: December 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        mermaid.contentLoaded();
+
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function downloadDiagram() {
+            const svg = document.querySelector('.mermaid svg');
+            if (!svg) {
+                alert('Diagram not yet rendered. Please wait a moment and try again.');
+                return;
+            }
+            
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = 'use-case-diagram.png';
+                link.click();
+            };
+            
+            img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+        }
+
+        function printDiagram() {
+            window.print();
+        }
+
+        function toggleFullscreen() {
+            const container = document.getElementById('diagramContainer');
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+services:
+  # Web Service for PHP Application
+  - type: web
+    name: bsu-bokod-lms
+    runtime: docker
+    plan: free
+    rootDir: .
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DB_HOST
+        fromService:
+          name: bsu-bokod-mysql
+          type: pserv
+          property: host
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_NAME
+        value: libsystem4
+      - key: DB_USER
+        value: libsystem_user
+      - key: DB_PASSWORD
+        fromService:
+          name: bsu-bokod-mysql
+          type: pserv
+          envVarKey: MYSQL_PASSWORD
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_PORT
+        value: "587"
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: MAIL_FROM_ADDRESS
+        sync: false
+    # Disk for persistent backup storage
+    disk:
+      name: backup-storage
+      mountPath: /var/backups
+      sizeGB: 1
+
+# Note: This service connects to the MySQL Private Service named 'bsu-bokod-mysql'
+# Make sure that service is running before deploying this web service.
+# The disk at /var/backups stores database backups persistently.

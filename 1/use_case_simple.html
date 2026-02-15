@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library System - Use Case Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: white;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .diagram-container {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            padding: 40px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.3em;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .diagram-container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="diagram-container">
+        <h2>Web-based BSU Bokod LMS - Use Case Diagram</h2>
+        
+        <div class="mermaid">
+graph TB
+    subgraph System["Web-based BSU Bokod LMS"]
+        UC1["Manage Physical Books"]
+        UC2["Manage E-books"]
+        UC3["Manage User Accounts"]
+        UC4["Borrow and Return Transactions"]
+        UC5["Manage Categories and Subjects"]
+        UC6["Manage Posts/News"]
+        UC7["View User/Logbook"]
+        UC8["Archive Books and User Accounts"]
+        
+        UC9["Search/Browse Physical Books"]
+        UC10["Search/Browse Digital Books"]
+        UC11["View Book Availability"]
+        UC12["View Transaction History"]
+        UC13["View Announcements"]
+        UC14["External Links"]
+        UC15["Contacts and Feedbacks"]
+        UC16["Suggest a book"]
+        
+        UC17["Update Profile and Password"]
+        UC18["View Dashboard"]
+        UC19["Login/Logout"]
+    end
+
+    Admin["👤 Admin"]
+    Registered["👤 Registered Users"]
+    Guest["👤 Guest"]
+
+    Admin --> UC1
+    Admin --> UC2
+    Admin --> UC3
+    Admin --> UC4
+    Admin --> UC5
+    Admin --> UC6
+    Admin --> UC7
+    Admin --> UC8
+    Admin --> UC18
+    Admin --> UC19
+
+    Registered --> UC9
+    Registered --> UC10
+    Registered --> UC11
+    Registered --> UC12
+    Registered --> UC13
+    Registered --> UC14
+    Registered --> UC15
+    Registered --> UC16
+    Registered --> UC17
+    Registered --> UC18
+    Registered --> UC19
+
+    Guest --> UC9
+    Guest --> UC10
+    Guest --> UC11
+    Guest --> UC13
+    Guest --> UC14
+    Guest --> UC15
+    Guest --> UC19
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

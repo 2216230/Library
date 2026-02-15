@@ -1,0 +1,155 @@
+@startuml Library_System_UseCase
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/style.puml
+
+title Library Management System - Use Case Diagram
+scale 1.5
+
+' Actors
+actor "Admin" as Admin
+actor "Student" as Student
+actor "Faculty" as Faculty
+actor "System" as System
+
+' Package: Authentication & Account Management
+package "Authentication & Account Management" {
+    usecase "Admin Login" as UC_AdminLogin
+    usecase "Student Registration" as UC_StudentReg
+    usecase "Faculty Registration" as UC_FacultyReg
+    usecase "Student/Faculty Login" as UC_UserLogin
+}
+
+' Package: Book & Inventory Management
+package "Book & Inventory Management" {
+    usecase "Manage Physical Books" as UC_ManageBooks
+    usecase "Manage E-Books" as UC_ManageEbooks
+    usecase "Manage Categories" as UC_ManageCategories
+    usecase "Manage Subjects" as UC_ManageSubjects
+    usecase "Perform Inventory Validation" as UC_InventoryValidation
+    usecase "View Validation History" as UC_ValidationHistory
+    usecase "View Disposal Report" as UC_DisposalReport
+}
+
+' Package: User Management
+package "User Management" {
+    usecase "Manage Students" as UC_ManageStudents
+    usecase "Manage Faculty" as UC_ManageFaculty
+    usecase "Manage Courses" as UC_ManageCourses
+    usecase "Manage Admin Accounts" as UC_ManageAdmins
+    usecase "View User Activity Log" as UC_UserActivity
+}
+
+' Package: Book Transactions
+package "Book Transactions" {
+    usecase "Browse Catalog" as UC_BrowseCatalog
+    usecase "Suggest Book" as UC_SuggestBook
+    usecase "Borrow Book" as UC_BorrowBook
+    usecase "Return Book" as UC_ReturnBook
+    usecase "Manage Transactions" as UC_ManageTransactions
+    usecase "View Personal Transactions" as UC_PersonalTransactions
+    usecase "Pay Penalties" as UC_PayPenalties
+}
+
+' Package: Reports & Analytics
+package "Reports & Analytics" {
+    usecase "Generate Transaction Report" as UC_TransReport
+    usecase "Generate Inventory Report" as UC_InventoryReport
+    usecase "Generate Discrepancy Report" as UC_DiscrepancyReport
+    usecase "Generate Validation Report" as UC_ValidationReport
+    usecase "View System Dashboard" as UC_SystemDashboard
+}
+
+' Package: Communication & Settings
+package "Communication & Settings" {
+    usecase "Send Announcements" as UC_Announcements
+    usecase "Receive Notifications" as UC_Notifications
+    usecase "Configure System Settings" as UC_Settings
+    usecase "Manage Penalty Rules" as UC_PenaltyRules
+}
+
+' Relationships for Admin
+Admin --> UC_AdminLogin
+Admin --> UC_ManageBooks
+Admin --> UC_ManageEbooks
+Admin --> UC_ManageCategories
+Admin --> UC_ManageSubjects
+Admin --> UC_InventoryValidation
+Admin --> UC_ValidationHistory
+Admin --> UC_DisposalReport
+Admin --> UC_ManageStudents
+Admin --> UC_ManageFaculty
+Admin --> UC_ManageCourses
+Admin --> UC_ManageAdmins
+Admin --> UC_UserActivity
+Admin --> UC_ManageTransactions
+Admin --> UC_TransReport
+Admin --> UC_InventoryReport
+Admin --> UC_DiscrepancyReport
+Admin --> UC_ValidationReport
+Admin --> UC_SystemDashboard
+Admin --> UC_Announcements
+Admin --> UC_Settings
+Admin --> UC_PenaltyRules
+
+' Relationships for Student
+Student --> UC_StudentReg
+Student --> UC_UserLogin
+Student --> UC_BrowseCatalog
+Student --> UC_SuggestBook
+Student --> UC_BorrowBook
+Student --> UC_ReturnBook
+Student --> UC_PersonalTransactions
+Student --> UC_PayPenalties
+Student --> UC_Notifications
+
+' Relationships for Faculty
+Faculty --> UC_FacultyReg
+Faculty --> UC_UserLogin
+Faculty --> UC_BrowseCatalog
+Faculty --> UC_SuggestBook
+Faculty --> UC_BorrowBook
+Faculty --> UC_ReturnBook
+Faculty --> UC_PersonalTransactions
+Faculty --> UC_PayPenalties
+Faculty --> UC_Notifications
+
+' System Relationships
+System --> UC_Notifications
+System --> UC_InventoryValidation
+System --> UC_ManageTransactions
+
+' Include/Extend Relationships
+UC_InventoryValidation --|> UC_ManageBooks : extends
+UC_InventoryValidation ..|> UC_DiscrepancyReport : includes
+UC_InventoryValidation ..|> UC_ValidationReport : includes
+UC_BorrowBook ..|> UC_ManageTransactions : includes
+UC_ReturnBook ..|> UC_ManageTransactions : includes
+UC_TransReport ..|> UC_ManageTransactions : includes
+
+' Constraints/Preconditions
+note right of UC_ManageStudents
+    Constraint: Cannot delete
+    students with active transactions
+end note
+
+note right of UC_ManageFaculty
+    Constraint: Cannot delete
+    faculty with active transactions
+end note
+
+note right of UC_AdminLogin
+    Precondition: Must use
+    email format username
+end note
+
+note right of UC_BorrowBook
+    Precondition: User logged in,
+    book exists, no penalties blocking
+end note
+
+note right of UC_InventoryValidation
+    Workflow: Generate checklist →
+    Physical count → Flag discrepancies →
+    Generate reports
+end note
+
+@enduml

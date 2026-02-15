@@ -1,0 +1,55 @@
+services:
+  # MySQL Private Service
+  - type: pserv
+    name: bsu-bokod-mysql
+    runtime: docker
+    repo: https://github.com/render-examples/mysql
+    plan: starter
+    disk:
+      name: mysql-data
+      mountPath: /var/lib/mysql
+      sizeGB: 10
+    envVars:
+      - key: MYSQL_DATABASE
+        value: libsystem4
+      - key: MYSQL_USER
+        value: libsystem_user
+      - key: MYSQL_PASSWORD
+        generateValue: true
+      - key: MYSQL_ROOT_PASSWORD
+        generateValue: true
+
+  # Web Service for PHP Application
+  - type: web
+    name: bsu-bokod-lms
+    runtime: docker
+    plan: starter
+    rootDir: .
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DB_HOST
+        fromService:
+          name: bsu-bokod-mysql
+          type: pserv
+          property: host
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_NAME
+        value: libsystem4
+      - key: DB_USER
+        value: libsystem_user
+      - key: DB_PASSWORD
+        fromService:
+          name: bsu-bokod-mysql
+          type: pserv
+          envVarKey: MYSQL_PASSWORD
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_PORT
+        value: "587"
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: MAIL_FROM_ADDRESS
+        sync: false

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Transaction Add</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Test Transaction Add</h1>
+
+<div id="results" style="border: 1px solid red; padding: 20px; margin: 20px 0;"></div>
+
+<button id="testBtn">Test Add Transaction</button>
+
+<script>
+$('#testBtn').click(function() {
+    let data = {
+        borrower_id: '1',
+        borrower_type: 'student',
+        book_id: '1',
+        copy_id: '1',
+        borrow_date: '2025-12-07',
+        days: '7',
+        due_date: '2025-12-14',
+        academic_year: '1',
+        semester: '1st'
+    };
+    
+    console.log('Sending data:', data);
+    
+    $.post('transaction_add_borrow.php', data, function(resp) {
+        console.log('Response:', resp);
+        $('#results').html('<pre>' + JSON.stringify(resp, null, 2) + '</pre>');
+    }, 'json').fail(function(xhr, status, err) {
+        console.error('Error:', err);
+        $('#results').html('<pre>Error: ' + err + '\n' + xhr.responseText + '</pre>');
+    });
+});
+</script>
+
+</body>
+</html>
